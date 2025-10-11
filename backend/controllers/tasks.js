@@ -1,17 +1,86 @@
 const Task = require('../models/task');
 
 module.exports.createTask = async (req,res) => {
-   //
+  try {
+     const { title, type, frequency, daysOfWeek, moodTag, isMandatory } = req.body;
+
+    if (!title || !type || !frequency || !moodTag || isMandatory === undefined) {
+      return res.status(400).send({ message: "Invalid Data" });
+    }
+
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).send({ message: "Unauthorized: user not found" });
+    }
+
+    const task = await Task.create({
+      userId,
+      title,
+      type,
+      repeat: {
+        frequency,
+        daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : []
+      },
+      moodTag,
+      isMandatory,
+    });
+
+    return res.status(201).send(task);
+
+  } catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
 }
 
 module.exports.getAllTasks = async (req,res) => {
-  //
+  try {
+    const userId = req.user.id;
+    const task = await Task.find({userId: userId});
+
+    return res.status(200).send(task);
+
+  } catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
 }
 
 module.exports.deleteTask = async (req,res) => {
-  //
+    try {
+    const { taskId } = req.params;
+
+    const task = await Task.findByIdAndDelete(taskId);
+
+    return res.status(200).send(task);
+
+  } catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
 }
 
 module.exports.updateTask = async (req,res) => {
-  //
+    try {
+    const { taskId } = req.params;
+    const { title, type, frequency, daysOfWeek, moodTag, isMandatory } = req.body;
+
+    const task = await Task.findByIdAndUpdate(
+      taskId,
+      {
+        title,
+        type,
+        frequency,
+        daysOfWeek,
+        moodTag,
+        isMandatory
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    return res.status(200).send(task);
+
+  } catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
 }

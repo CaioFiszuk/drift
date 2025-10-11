@@ -84,7 +84,7 @@ taskSchema.pre(/^find/, function(next) {
   next();
 });
 
-taskSchema.virtual("parentTask").get(function() {
+taskSchema.virtual("parentTaskData").get(function() {
   return this.parentTaskId;
 });
 
