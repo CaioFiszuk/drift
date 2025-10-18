@@ -34,6 +34,16 @@ class Api {
     });
     }
 
+    getTasks() {
+      return axios.get(`${this._baseURL}/tasks`, { headers: this._getAuthorizationHeaders() })
+      .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return Promise.reject(`Error: ${error.response ? error.response.status : error.message}`);
+        });
+    }
+
 }
 
 const api = new Api({

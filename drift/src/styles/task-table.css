@@ -1,0 +1,18 @@
+.task-table {
+    width: 100%;
+    max-height: 100vh;
+}
+
+.task-table__cell {
+    border-bottom: 1px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.task-table__message {
+    position: absolute;
+    top: 380px;
+    left: 470px;
+    font-size: 25px;
+    line-height: 35px;
+}

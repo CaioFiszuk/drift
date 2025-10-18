@@ -4,6 +4,7 @@ import '../styles/form.css';
 import { api } from '../utils/api';
 import Popup from './Popup';
 import Validator from './Validator';
+import { NavLink } from 'react-router-dom';
 
 function Header({handleSignOut, setTasks}) {
 
@@ -60,6 +61,10 @@ function Header({handleSignOut, setTasks}) {
     <header className='header'>
        
         <img src={Logo} alt="Logo"  className='header__image'/>
+
+        <nav className='header__navigation'>
+          <NavLink to='/alltasks' className='header__navigation-link'>Todas tarefas</NavLink>
+        </nav>
 
         <button className='header__button' onClick={openCreateTaskModal}>Criar tarefa</button>
 

@@ -5,8 +5,10 @@ import Header from './Header';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
+import AllTasks from './AllTasks';
 import * as auth from '../utils/auth';
 import * as token from '../utils/token';
+import { api } from '../utils/api';
 import { toast } from "react-toastify";
 import { currentUserContext } from '../contexts/CurrentUserContext';
 
@@ -17,7 +19,7 @@ function App() {
 
   const navigate = useNavigate();
 
-    const handleRegistration = ({
+  const handleRegistration = ({
     username,
     email,
     password
@@ -56,6 +58,15 @@ function App() {
     navigate("/signin");
   }
 
+  const handleGetTasks = async () => {
+      try{
+        const data = await api.getTasks();
+        setTasks(data);
+      }catch(error){
+        console.log(error);
+      }
+  }
+
   useEffect(()=>{
     const jwt = token.getToken();
     if (jwt) {
@@ -72,7 +83,7 @@ function App() {
         });
     }
 
-     console.log(tasks);
+     handleGetTasks();
   }, []);
 
   return (
@@ -99,6 +110,13 @@ function App() {
           <>
             <Register handleRegistration={handleRegistration}/>
           </>
+        }/>
+
+        <Route path='/alltasks' element={
+           <>
+             <Header />
+             <AllTasks tasks={tasks}/>
+           </>
         }/>
 
           <Route
