@@ -10,6 +10,11 @@
     height: 120px;
 }
 
+.header__navigation {
+    display: flex;
+    gap: 20px;
+}
+
 .header__navigation-link {
     text-decoration: none;
     cursor: pointer;

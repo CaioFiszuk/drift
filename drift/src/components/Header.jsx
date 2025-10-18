@@ -64,6 +64,7 @@ function Header({handleSignOut, setTasks}) {
 
         <nav className='header__navigation'>
           <NavLink to='/alltasks' className='header__navigation-link'>Todas tarefas</NavLink>
+          <NavLink to='/manifest' className='header__navigation-link'>Manifesto Drift</NavLink>
         </nav>
 
         <button className='header__button' onClick={openCreateTaskModal}>Criar tarefa</button>

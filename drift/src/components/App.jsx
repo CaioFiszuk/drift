@@ -6,6 +6,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
 import AllTasks from './AllTasks';
+import Manifest from './Manifest';
 import * as auth from '../utils/auth';
 import * as token from '../utils/token';
 import { api } from '../utils/api';
@@ -113,10 +114,17 @@ function App() {
         }/>
 
         <Route path='/alltasks' element={
-           <>
+           <ProtectedRoute isLoggedIn={isLoggedIn}>
              <Header />
              <AllTasks tasks={tasks}/>
-           </>
+           </ProtectedRoute>
+        }/>
+
+        <Route path='/manifest' element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Header />
+            <Manifest />
+          </ProtectedRoute>
         }/>
 
           <Route

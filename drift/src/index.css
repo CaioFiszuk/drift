@@ -4,6 +4,7 @@
 @import url('./styles/popup.css');
 @import url('./styles/validator.css');
 @import url('./styles/task-table.css');
+@import url('./styles/manifest.css');
 
 * {
     margin: 0;
