@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Main from  './Main';
 import Header from './Header';
@@ -8,9 +8,12 @@ import Register from './Register';
 import * as auth from '../utils/auth';
 import * as token from '../utils/token';
 import { toast } from "react-toastify";
+import { currentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+  const [tasks, setTasks] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -53,14 +56,34 @@ function App() {
     navigate("/signin");
   }
 
+  useEffect(()=>{
+    const jwt = token.getToken();
+    if (jwt) {
+      auth.getUserInfo(jwt)
+        .then((data) => {
+          setIsLoggedIn(true);
+          setCurrentUser(data.data._id);
+          localStorage.setItem("isLoggedIn", "true");
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+          token.removeToken();
+          localStorage.removeItem("isLoggedIn");
+        });
+    }
+
+     console.log(tasks);
+  }, []);
+
   return (
     <div>
+      <currentUserContext.Provider value={currentUser}>
       <Routes>
         <Route 
           path='/'
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Header handleSignOut={signOut}/>
+              <Header handleSignOut={signOut} setTasks={setTasks}/>
               <Main />
             </ProtectedRoute>
           }
@@ -89,6 +112,7 @@ function App() {
             }
           />
       </Routes>
+      </currentUserContext.Provider>
     </div>
   )
 }

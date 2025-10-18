@@ -1,4 +1,4 @@
-import '../styles/form.css';
+import '../styles/auth-form.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
@@ -32,14 +32,14 @@ function Register({ handleRegistration }) {
 
     return (
       <div className="page">
-      <form className="form" onSubmit={handleSubmit}>
-         <legend className="form__title">Inscreva-se</legend>
+      <form className="auth-form" onSubmit={handleSubmit}>
+         <legend className="auth-form__title">Inscreva-se</legend>
 
          <input 
            type='text' 
            name='username'
            placeholder='Nome' 
-           className='form__input'
+           className='auth-form__input'
            value={data.username}
            onChange={handleChange}
          />
@@ -48,7 +48,7 @@ function Register({ handleRegistration }) {
            type='email' 
            name='email'
            placeholder='E-mail' 
-           className='form__input'
+           className='auth-form__input'
            value={data.email}
            onChange={handleChange}
          />
@@ -57,14 +57,14 @@ function Register({ handleRegistration }) {
            type='password' 
            name='password'
            placeholder='Senha' 
-           className='form__input'
+           className='auth-form__input'
            value={data.password}
            onChange={handleChange}
          />
 
-         <button className="form__button" type='submit'>Inscrever-se</button>
+         <button className="auth-form__button" type='submit'>Inscrever-se</button>
 
-         <span className="form__link"><Link to='/signin' className='link'>Faça o login aqui</Link></span>
+         <span className="auth-form__link"><Link to='/signin' className='link'>Faça o login aqui</Link></span>
       </form>
         <ToastContainer />
       </div>
