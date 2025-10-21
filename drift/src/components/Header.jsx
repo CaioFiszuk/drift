@@ -93,6 +93,7 @@ function Header({handleSignOut, setTasks}) {
                defaultValue="single"
                className='form__input'
                name='type'
+               onChange={handleChange}
              >
                <option value="single">Tarefa única</option>
                <option value="project">Projeto</option> 
@@ -102,6 +103,7 @@ function Header({handleSignOut, setTasks}) {
                defaultValue="casual"
                className='form__input'
                name='frequency'
+               onChange={handleChange}
              >
                <option value="daily">Tarefa diária</option>
                <option value="weekly">Tarefa semanal</option> 
@@ -128,6 +130,7 @@ function Header({handleSignOut, setTasks}) {
                defaultValue={true}
                className='form__input'
                name='isMandatory'
+               onChange={handleChange}
              >
               <option value={true}>Sim</option>
               <option value={false}>Não</option>
@@ -137,6 +140,7 @@ function Header({handleSignOut, setTasks}) {
               defaultValue="good"
               className='form__input'
               name='moodTag'
+              onChange={handleChange}
              >
               <option value="good">Motivado</option>
               <option value="bad">Desmotivado</option>

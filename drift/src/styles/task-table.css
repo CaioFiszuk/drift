@@ -16,3 +16,11 @@
     font-size: 25px;
     line-height: 35px;
 }
+
+.task-table__cell__icon {
+    cursor: pointer;
+}
+
+.task-table__cell__icon:hover {
+    opacity: 0.50;
+}

@@ -115,14 +115,14 @@ function App() {
 
         <Route path='/alltasks' element={
            <ProtectedRoute isLoggedIn={isLoggedIn}>
-             <Header />
-             <AllTasks tasks={tasks}/>
+             <Header handleSignOut={signOut} setTasks={setTasks}/>
+             <AllTasks tasks={tasks} setTasks={setTasks}/>
            </ProtectedRoute>
         }/>
 
         <Route path='/manifest' element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <Header />
+            <Header handleSignOut={signOut} setTasks={setTasks}/>
             <Manifest />
           </ProtectedRoute>
         }/>

@@ -44,6 +44,15 @@ class Api {
         });
     }
 
+      deleteTask(id) {
+        return axios.delete(`${this._baseURL}/tasks/${id}`)
+        .then((res)=>{
+          return res.data;
+        })
+        .catch((error)=>{
+          return Promise.reject(`Error: ${error.response ? error.response.status : error.message}`);
+        })
+    }
 }
 
 const api = new Api({
