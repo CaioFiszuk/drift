@@ -11,7 +11,7 @@ import * as auth from '../utils/auth';
 import * as token from '../utils/token';
 import { api } from '../utils/api';
 import { toast } from "react-toastify";
-import { currentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
@@ -83,13 +83,17 @@ function App() {
           localStorage.removeItem("isLoggedIn");
         });
     }
-
-     handleGetTasks();
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleGetTasks();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div>
-      <currentUserContext.Provider value={currentUser}>
+      <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route 
           path='/'
@@ -138,7 +142,7 @@ function App() {
             }
           />
       </Routes>
-      </currentUserContext.Provider>
+      </CurrentUserContext.Provider>
     </div>
   )
 }

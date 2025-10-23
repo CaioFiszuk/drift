@@ -65,8 +65,8 @@ function AllTasks({tasks, setTasks}) {
       <Popup isOpen={deleteModal} onClose={closeDeleteModal}>
         <h3 className='form__title'>Tem certeza?</h3>
           <div className='form__button-box'>
-            <button className='form__button form__button-success' onClick={handleDeleteTask}>Sim</button>
-            <button className='form__button form__button-danger' onClick={closeDeleteModal}>Não</button>
+            <button className='form__button' onClick={handleDeleteTask}>Sim</button>
+            <button className='form__button' onClick={closeDeleteModal}>Não</button>
           </div>
       </Popup>
         </div>

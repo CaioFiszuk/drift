@@ -45,7 +45,7 @@ class Api {
     }
 
       deleteTask(id) {
-        return axios.delete(`${this._baseURL}/tasks/${id}`)
+        return axios.delete(`${this._baseURL}/tasks/${id}`, { headers: this._getAuthorizationHeaders() })
         .then((res)=>{
           return res.data;
         })
