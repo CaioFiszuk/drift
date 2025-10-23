@@ -53,6 +53,30 @@ class Api {
           return Promise.reject(`Error: ${error.response ? error.response.status : error.message}`);
         })
     }
+
+      updateTask(id, { title, type, frequency, daysOfWeek, moodTag, isMandatory }) {
+      if (!id) {
+        return Promise.reject("O ID é obrigatório.");
+      }
+
+      const updatedFields = {};
+
+       if (title !== undefined) updatedFields.title = title;
+       if (type !== undefined) updatedFields.type = type;
+       if (frequency !== undefined) updatedFields.frequency = frequency;
+       if (daysOfWeek !== undefined) updatedFields.daysOfWeek = daysOfWeek;
+       if (moodTag !== undefined) updatedFields.moodTag = moodTag;
+       if (isMandatory !== undefined) updatedFields.isMandatory = isMandatory;
+    
+      return axios.patch(`${this._baseURL}/tasks/${id}`, updatedFields, { headers: this._getAuthorizationHeaders() })
+        .then((res) => res.data)
+        .catch((error) => {
+          const errorMessage = error.response 
+            ? `Error: ${error.response.status} - ${error.response.data.message || error.message}` 
+            : `Network error: ${error.message}`;
+          return Promise.reject(errorMessage);
+        });
+    }
 }
 
 const api = new Api({

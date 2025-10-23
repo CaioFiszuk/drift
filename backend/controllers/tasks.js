@@ -67,8 +67,10 @@ module.exports.updateTask = async (req,res) => {
       {
         title,
         type,
-        frequency,
-        daysOfWeek,
+        repeat: {
+          frequency,
+          daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : [daysOfWeek]
+        },
         moodTag,
         isMandatory
       },
