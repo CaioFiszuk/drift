@@ -84,7 +84,7 @@ function Header({handleSignOut, setTasks}) {
               onChange={handleChange}
               required
               minLength={5}
-              maxLength={20}
+              maxLength={50}
               pattern="^[^\d]*$"
              />
               {!isValid && <Validator message={errorMessage} />}

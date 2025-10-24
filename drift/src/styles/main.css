@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.main__mood-box {
+    display: flex;
+    gap: 30px;
+    align-self: flex-end;
+    padding: 15px;
+}
+
+.main__mood-box__icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  font-size: 26px;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.main__mood-box__icon:hover {
+  transform: scale(1.1);
+}
+
+.main__mood-box--active {
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+}

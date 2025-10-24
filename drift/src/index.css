@@ -5,6 +5,7 @@
 @import url('./styles/validator.css');
 @import url('./styles/task-table.css');
 @import url('./styles/manifest.css');
+@import url('./styles/main.css');
 
 * {
     margin: 0;

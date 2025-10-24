@@ -44,6 +44,18 @@ module.exports.getAllTasks = async (req,res) => {
   }
 }
 
+module.exports.getTasksByMood = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const tasks = await Task.find({userId: userId, moodTag: 'bad', isMandatory: false});
+
+    return res.status(200).send(tasks);
+
+  }catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
+}
+
 module.exports.deleteTask = async (req,res) => {
     try {
     const { taskId } = req.params;

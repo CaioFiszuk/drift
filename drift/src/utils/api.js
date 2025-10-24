@@ -44,6 +44,16 @@ class Api {
         });
     }
 
+    getTasksByMood() {
+      return axios.get(`${this._baseURL}/tasks/mood`, { headers: this._getAuthorizationHeaders() })
+      .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return Promise.reject(`Error: ${error.response ? error.response.status : error.message}`);
+        });
+    }
+
       deleteTask(id) {
         return axios.delete(`${this._baseURL}/tasks/${id}`, { headers: this._getAuthorizationHeaders() })
         .then((res)=>{
