@@ -24,3 +24,36 @@
 .task-table__cell__icon:hover {
     opacity: 0.50;
 }
+
+.task-table__button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.task-table__button:hover {
+    opacity: 0.50;
+}
+
+.info {
+    background-color: rgb(112, 141, 225);
+    color: white;
+}
+
+.success {
+    background-color: green;
+    color: white;
+}
+
+.danger {
+    color: red;
+}
+
+.warning {
+    color: rgb(219, 219, 0);
+}
+
+.complete {
+    color: green;
+}

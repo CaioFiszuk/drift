@@ -98,3 +98,26 @@ module.exports.updateTask = async (req,res) => {
     return res.status(500).send({ message: "Server Error" });
   }
 }
+
+module.exports.updateStatus = async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const { status } = req.body;
+
+    const task = await Task.findByIdAndUpdate(
+      taskId,
+      {
+        status
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    return res.status(200).send(task);
+
+  } catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
+}

@@ -72,8 +72,8 @@ function AllTasks({tasks, setTasks}) {
     try{
 
     const response = await api.updateTask(selectedTask._id, newValue)
-      setTasks((prevSentences) =>
-        prevSentences.map((task) =>
+      setTasks((prev) =>
+        prev.map((task) =>
           task._id === selectedTask._id ? response : task
         )
       );

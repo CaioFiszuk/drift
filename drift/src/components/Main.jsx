@@ -4,9 +4,14 @@ import { TfiFaceSad } from 'react-icons/tfi';
 import '../styles/main.css';
 import { api } from '../utils/api';
 
-function Main({getTasks, tasks}) {
+function Main({getTasks, setTasks, tasks}) {
   const [activeMood, setActiveMood] = useState("good");
   const [tasksByMood, setTasksByMood] = useState([]);
+  const statusColors = {
+    done: 'complete',
+    in_progress: 'warning',
+    pending: 'danger',
+  };
 
   const handleGetTaskByMood = async () => {
     try {
@@ -14,6 +19,19 @@ function Main({getTasks, tasks}) {
       setTasksByMood(response);
     } catch(error) {
       console.log(error);
+    }
+  }
+
+  const handleChangeStatus = async (task, status) => {
+    try{
+    const response = await api.updateStatus(task._id, status);
+      setTasks((prev) =>
+        prev.map((t) =>
+          t._id === task._id ? response : t
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao atualizar: ", error);
     }
   }
 
@@ -48,13 +66,39 @@ function Main({getTasks, tasks}) {
                 <tr>
                   <th className='task-table__cell'>Título</th>
                   <th className='task-table__cell'>Status</th>
+                  <th className='task-table__cell'></th>
+                  <th className='task-table__cell'></th>
                 </tr>
               </thead>
               <tbody>
                 {tasks.map((task) => (
                   <tr key={task._id}>
                     <td className='task-table__cell'>{task.title}</td>
-                    <td className='task-table__cell'>{task.status}</td>
+                    <td 
+                      className={`task-table__cell ${statusColors[task.status] || ''}`}
+                    >
+                      {task.status}
+                    </td>
+                    <td className="task-table__cell">
+                      <button 
+                        className='task-table__button info'
+                        onClick={()=>{
+                          handleChangeStatus(task, 'in_progress');
+                        }}
+                      >
+                        Começar
+                      </button>
+                    </td>
+                    <td className="task-table__cell">
+                      <button 
+                        className='task-table__button success'
+                        onClick={()=>{
+                          handleChangeStatus(task, 'done');
+                        }}
+                      >
+                        Concluir
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -65,6 +109,8 @@ function Main({getTasks, tasks}) {
               <tr>
                 <th className='task-table__cell'>Título</th>
                 <th className='task-table__cell'>Status</th>
+                <th className='task-table__cell'></th>
+                <th className='task-table__cell'></th>
               </tr>
             </thead>
             <tbody>
@@ -72,6 +118,26 @@ function Main({getTasks, tasks}) {
                 <tr key={taskByMood._id}>
                   <td className='task-table__cell'>{taskByMood.title}</td>
                   <td className='task-table__cell'>{taskByMood.status}</td>
+                  <td className="task-table__cell">
+                    <button 
+                      className='task-table__button info'
+                      onClick={()=>{
+                        handleChangeStatus(taskByMood, 'in_progress');
+                      }}
+                    >
+                      Começar
+                    </button>
+                  </td>
+                  <td className="task-table__cell">
+                    <button 
+                     className='task-table__button success'
+                      onClick={()=>{
+                          handleChangeStatus(taskByMood, 'done');
+                      }}
+                    >
+                      Concluir
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

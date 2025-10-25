@@ -64,7 +64,7 @@ class Api {
         })
     }
 
-      updateTask(id, { title, type, frequency, daysOfWeek, moodTag, isMandatory }) {
+    updateTask(id, { title, type, frequency, daysOfWeek, moodTag, isMandatory }) {
       if (!id) {
         return Promise.reject("O ID é obrigatório.");
       }
@@ -79,6 +79,21 @@ class Api {
        if (isMandatory !== undefined) updatedFields.isMandatory = isMandatory;
     
       return axios.patch(`${this._baseURL}/tasks/${id}`, updatedFields, { headers: this._getAuthorizationHeaders() })
+        .then((res) => res.data)
+        .catch((error) => {
+          const errorMessage = error.response 
+            ? `Error: ${error.response.status} - ${error.response.data.message || error.message}` 
+            : `Network error: ${error.message}`;
+          return Promise.reject(errorMessage);
+        });
+    }
+
+    updateStatus(id, status) {
+      if (!id) {
+        return Promise.reject("O ID é obrigatório.");
+      }
+    
+      return axios.patch(`${this._baseURL}/tasks/${id}/status`, {status}, { headers: this._getAuthorizationHeaders() })
         .then((res) => res.data)
         .catch((error) => {
           const errorMessage = error.response 

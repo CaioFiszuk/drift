@@ -100,7 +100,7 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Header handleSignOut={signOut} setTasks={setTasks}/>
-              <Main getTasks={handleGetTasks} tasks={tasks}/>
+              <Main getTasks={handleGetTasks} setTasks={setTasks} tasks={tasks}/>
             </ProtectedRoute>
           }
         />
