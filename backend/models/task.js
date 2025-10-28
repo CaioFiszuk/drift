@@ -93,4 +93,4 @@ taskSchema.virtual("parentTaskData").get(function() {
   return this.parentTaskId;
 });
 
-module.exports = mongoose.model("Task", taskSchema);
+module.exports = mongoose.models.Task || mongoose.model("Task", taskSchema);
