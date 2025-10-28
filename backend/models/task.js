@@ -63,6 +63,11 @@ dueDate: {
     default: "pending"
   },
 
+  lastCompletedAt: {
+    type: Date,
+    default: null
+  },
+
   createdAt: {
     type: Date,
     default: Date.now

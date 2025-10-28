@@ -104,16 +104,21 @@ module.exports.updateStatus = async (req, res) => {
     const { taskId } = req.params;
     const { status } = req.body;
 
-    const task = await Task.findByIdAndUpdate(
-      taskId,
-      {
-        status
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    if (!status) {
+      return res.status(400).json({ message: "Status is missing" });
+    }
+
+    const update = { status, updatedAt: new Date() };
+
+    if (status === "done") {
+      update.lastCompletedAt = new Date();
+    }
+
+    const task = await Task.findByIdAndUpdate(taskId, update, { new: true });
+
+    if (!task) {
+      return res.status(404).json({ message: "Task not found." });
+    }
 
     return res.status(200).send(task);
 

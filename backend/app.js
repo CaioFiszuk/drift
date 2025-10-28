@@ -14,6 +14,8 @@ mongoose.connect("mongodb://localhost:27017/drift")
   console.log("Database is successfully connected");
 });
 
+require("./cron/resetDailyTasks");
+
 const { PORT = 3000 } = process.env;
 
 app.use(function (req, res, next) {
