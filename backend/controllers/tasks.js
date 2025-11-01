@@ -2,33 +2,25 @@ const Task = require('../models/task');
 
 module.exports.createTask = async (req,res) => {
   try {
-     const { title, type, frequency, daysOfWeek, moodTag, isMandatory } = req.body;
+    const { title, type, frequency, isMandatory, moodTag } = req.body;
+    const userId = req.user.id;
 
-    if (!title || !type || !frequency || !moodTag || isMandatory === undefined) {
-      return res.status(400).send({ message: "Invalid Data" });
-    }
-
-    const userId = req.user?.id;
-    if (!userId) {
-      return res.status(401).send({ message: "Unauthorized: user not found" });
-    }
-
-    const task = await Task.create({
+    const newTask = new Task({
       userId,
       title,
       type,
-      repeat: {
-        frequency,
-        daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : []
-      },
-      moodTag,
+      frequency,
       isMandatory,
+      moodTag,
     });
 
-    return res.status(201).send(task);
+    await newTask.save();
 
-  } catch(error) {
-    return res.status(500).send({ message: "Server Error" });
+    res.status(201).json(newTask);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Cannot create a Task" });
   }
 }
 
@@ -110,7 +102,7 @@ module.exports.updateStatus = async (req, res) => {
 
     const update = { status, updatedAt: new Date() };
 
-    if (status === "done") {
+    if (status === "feito") {
       update.lastCompletedAt = new Date();
     }
 

@@ -8,9 +8,9 @@ function Main({getTasks, setTasks, tasks}) {
   const [activeMood, setActiveMood] = useState("good");
   const [tasksByMood, setTasksByMood] = useState([]);
   const statusColors = {
-    done: 'complete',
-    in_progress: 'warning',
-    pending: 'danger',
+    feito: 'complete',
+    em_progresso: 'warning',
+    pendente: 'danger',
   };
 
   const handleGetTaskByMood = async () => {
@@ -83,7 +83,7 @@ function Main({getTasks, setTasks, tasks}) {
                       <button 
                         className='task-table__button info'
                         onClick={()=>{
-                          handleChangeStatus(task, 'in_progress');
+                          handleChangeStatus(task, 'em progresso');
                         }}
                       >
                         Começar
@@ -93,7 +93,7 @@ function Main({getTasks, setTasks, tasks}) {
                       <button 
                         className='task-table__button success'
                         onClick={()=>{
-                          handleChangeStatus(task, 'done');
+                          handleChangeStatus(task, 'feito');
                         }}
                       >
                         Concluir
@@ -122,7 +122,7 @@ function Main({getTasks, setTasks, tasks}) {
                     <button 
                       className='task-table__button info'
                       onClick={()=>{
-                        handleChangeStatus(taskByMood, 'in_progress');
+                        handleChangeStatus(taskByMood, 'em progresso');
                       }}
                     >
                       Começar
@@ -132,7 +132,7 @@ function Main({getTasks, setTasks, tasks}) {
                     <button 
                      className='task-table__button success'
                       onClick={()=>{
-                          handleChangeStatus(taskByMood, 'done');
+                          handleChangeStatus(taskByMood, 'feito');
                       }}
                     >
                       Concluir

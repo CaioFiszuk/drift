@@ -15,9 +15,9 @@ class Api {
     }
 
     createTask(data) {
-      const { title, type, frequency, daysOfWeek, moodTag, isMandatory } = data;
+      const { title, type, frequency, moodTag, isMandatory } = data;
 
-      if (!title || !type || !frequency ||!daysOfWeek || !moodTag || isMandatory === undefined) {
+      if (!title || !type || !frequency || !moodTag || isMandatory === undefined) {
         return Promise.reject("Todos esses campos são obrigatórios.");
       }
 

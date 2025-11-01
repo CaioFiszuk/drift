@@ -7,15 +7,14 @@ import { api } from '../utils/api';
 
 function AllTasks({tasks, setTasks}) {
   const [deleteModal, setDeleteModal] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
-    const [updateFormData, setUpdateFormData] = useState({
+  //const [updateModal, setUpdateModal] = useState(false);
+   /* const [updateFormData, setUpdateFormData] = useState({
     title: '',
     type: '',
     frequency: '',
-    daysOfWeek: '',
     moodTag: '',
     isMandatory: ''
-  });
+  });*/
   const [selectedTask, setSelectedTask] = useState(null);
 
   const openDeleteModal = (task) => {
@@ -27,33 +26,7 @@ function AllTasks({tasks, setTasks}) {
     setDeleteModal(false);
   }
 
-  const openUpdateModal = (task) => {
-    setSelectedTask(task);
-    setUpdateFormData({
-      title: task.title,
-      type: task.type,
-      frequency: task.repeat.frequency,
-      daysOfWeek: task.repeat.daysOfWeek,
-      moodTag: task.moodTag,
-      isMandatory: task.isMandatory
-    });
-    setUpdateModal(true);
-  }
-
-  const closeUpdateModal = () => {
-    setUpdateModal(false);
-  }
-
-    const handleChange = (event) => {
-    const { name, value, type } = event.target;
-
-    setUpdateFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" ? Number(value) : value,
-    }));
-  };
-
-  const handleDeleteTask = async () => {
+   const handleDeleteTask = async () => {
      if(!selectedTask) return;
 
      try {
@@ -66,7 +39,34 @@ function AllTasks({tasks, setTasks}) {
     }
   }
 
-  const handleUpdateTask = async (newValue) => {
+  /*const openUpdateModal = (task) => {
+    setSelectedTask(task);
+    setUpdateFormData({
+      title: task.title,
+      type: task.type,
+      frequency: task.repeat.frequency,
+      daysOfWeek: task.repeat.daysOfWeek,
+      moodTag: task.moodTag,
+      isMandatory: task.isMandatory
+    });
+    setUpdateModal(true);
+  }
+
+ /* const closeUpdateModal = () => {
+    setUpdateModal(false);
+  }
+
+    const handleChange = (event) => {
+    const { name, value, type } = event.target;
+
+    setUpdateFormData((prev) => ({
+      ...prev,
+      [name]: type === "number" ? Number(value) : value,
+    }));
+  };
+
+
+  /*const handleUpdateTask = async (newValue) => {
     if(!selectedTask) return;
 
     try{
@@ -81,12 +81,12 @@ function AllTasks({tasks, setTasks}) {
     } catch (error) {
       console.error("Erro ao atualizar: ", error);
     }
-  }
+  }*/
 
-  const handleSubmit = (event) => {
+  /*const handleSubmit = (event) => {
       event.preventDefault();
       handleUpdateTask(updateFormData);
-  };
+  };*/
 
     return(
         <div>
@@ -106,11 +106,11 @@ function AllTasks({tasks, setTasks}) {
               <tr key={task._id}>
                 <td className='task-table__cell'>{task.title}</td>
                 <td className='task-table__cell'>{task.type}</td>
-                <td className='task-table__cell'>{task.repeat.frequency}</td>
+                <td className='task-table__cell'>{task.frequency.mode}</td>
                 <td className='task-table__cell'>
                   <FaPencilAlt 
                    className='task-table__cell__icon'
-                   onClick={() => openUpdateModal(task)}
+                   //onClick={() => openUpdateModal(task)}
                   />
                 </td>
                 <td className='task-table__cell'>
@@ -127,7 +127,26 @@ function AllTasks({tasks, setTasks}) {
         <p className='task-table__message'>Ainda não existem tarefas registradas</p>
       )}
 
-      <Popup isOpen={updateModal} onClose={closeUpdateModal}>
+      <Popup isOpen={deleteModal} onClose={closeDeleteModal}>
+        <h3 className='form__title'>Tem certeza?</h3>
+          <div className='form__button-box'>
+            <button className='form__button' onClick={handleDeleteTask}>Sim</button>
+            <button className='form__button' onClick={closeDeleteModal}>Não</button>
+          </div>
+      </Popup>  
+    </div>
+    );
+}
+
+export default AllTasks;
+
+
+/**
+ *        
+ * 
+ * 
+ * 
+ *    <Popup isOpen={updateModal} onClose={closeUpdateModal}>
            <form onSubmit={handleSubmit} className='form'>
              <legend className='form__title'>Editar Tarefa</legend>
 
@@ -150,8 +169,8 @@ function AllTasks({tasks, setTasks}) {
                value={updateFormData.type}
                onChange={handleChange}
              >
-               <option value="single">Tarefa única</option>
-               <option value="project">Projeto</option> 
+               <option value="tarefa unica">Tarefa única</option>
+               <option value="projeto">Projeto</option> 
              </select>
 
             <select
@@ -160,9 +179,7 @@ function AllTasks({tasks, setTasks}) {
                value={updateFormData.frequency}
                onChange={handleChange}
              >
-               <option value="daily">Tarefa diária</option>
-               <option value="weekly">Tarefa semanal</option> 
-               <option value="casual">Tarefa casual</option>
+               
              </select>
 
              <input 
@@ -206,16 +223,4 @@ function AllTasks({tasks, setTasks}) {
             </button>
            </form>
       </Popup>
-
-      <Popup isOpen={deleteModal} onClose={closeDeleteModal}>
-        <h3 className='form__title'>Tem certeza?</h3>
-          <div className='form__button-box'>
-            <button className='form__button' onClick={handleDeleteTask}>Sim</button>
-            <button className='form__button' onClick={closeDeleteModal}>Não</button>
-          </div>
-      </Popup>
-    </div>
-    );
-}
-
-export default AllTasks;
+ */

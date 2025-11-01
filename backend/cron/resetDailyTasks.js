@@ -5,10 +5,10 @@ cron.schedule("0 0 * * *", async () => {
   try {
     const result = await Task.updateMany(
       {
-        "repeat.frequency": "daily",
-        status: { $in: ["done", "in_progress"] }
+        "frequency.mode": "diaria",
+        status: { $in: ["feito", "em progresso"] }
       },
-      { $set: { status: "pending" } }
+      { $set: { status: "pendente" } }
     );
 
     console.log(`[CRON] ${new Date().toISOString()} → ${result.modifiedCount} tasks reseted successfully.`);

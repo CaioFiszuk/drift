@@ -4,93 +4,75 @@ const taskSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
   },
 
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
 
   type: {
     type: String,
-    enum: ["single", "project"],
-    default: "single"
+    enum: ["tarefa unica", "projeto"],
+    default: "tarefa unica",
   },
 
-  repeat: {
-    frequency: {
+  frequency: {
+    mode: {
       type: String,
-      enum: ["daily", "weekly", "casual"],
-      default: "daily"
+      enum: ["diaria", "diaria com exceção", "semanal", "quinzenal", "data fixa", "data fixa adiavel"],
+      default: "diaria",
     },
-    daysOfWeek: [Number]
+
+    exceptDays: {
+      type: [Number],
+      default: [],
+    },
+
+    dayOfWeek: {
+      type: Number,
+      default: null,
+    },
+
+    dueDate: {
+      type: Date,
+      default: null,
+    },
   },
 
-dueDate: {
-  type: Date,
-  default: function() {
-    return this.repeat.frequency === "casual" ? new Date() : null;
-  }
-},
-
-  parentTaskId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Task",
-    default: null
+  status: {
+    type: String,
+    enum: ["pendente", "em progresso", "feito"],
+    default: "pendente",
   },
 
-  parentTask: {
-    type: Object,
-    default: null
+  isMandatory: {
+    type: Boolean,
+    default: false,
   },
 
   moodTag: {
     type: String,
     enum: ["good", "bad"],
-    default: null
-  },
-
-  isMandatory: {
-    type: Boolean,
-    default: false
-  },
-
-  status: {
-    type: String,
-    enum: ["pending", "in_progress", "done"],
-    default: "pending"
-  },
-
-  lastCompletedAt: {
-    type: Date,
-    default: null
+    default: null,
   },
 
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-taskSchema.pre("save", function(next) {
+taskSchema.pre("save", function (next) {
   this.updatedAt = new Date();
   next();
-});
-
-taskSchema.pre(/^find/, function(next) {
-  this.populate("parentTaskId");
-  next();
-});
-
-taskSchema.virtual("parentTaskData").get(function() {
-  return this.parentTaskId;
 });
 
 module.exports = mongoose.models.Task || mongoose.model("Task", taskSchema);
