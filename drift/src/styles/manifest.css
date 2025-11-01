@@ -1,9 +1,41 @@
+.manifest__container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 40px;
+  background: #f9fafb;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: #333;
+  line-height: 1.8;
+}
+
 .manifest__title {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.manifest__subtitle {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #444;
+  margin: 40px 0 20px;
 }
 
 .manifest__paragraph {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: justify;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+.manifest__paragraph--center {
+  text-align: center;
+  font-style: italic;
+  color: #666;
 }
