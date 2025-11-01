@@ -31,7 +31,7 @@ function Header({handleSignOut, setTasks}) {
   return (
     <header className='header'>
        
-        <img src={Logo} alt="Logo"  className='header__image'/>
+       <NavLink to='/'><img src={Logo} alt="Logo"  className='header__image'/></NavLink>
 
         <nav className='header__navigation'>
           <NavLink to='/alltasks' className='header__navigation-link'>Todas tarefas</NavLink>

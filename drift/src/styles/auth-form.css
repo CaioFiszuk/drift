@@ -2,12 +2,14 @@
     display: flex;
     flex-direction: column;
     width: 500px;
-    gap: 20px;
-    border: 1px solid black;
-    padding: 15px 0;
-    position: absolute;
-    top: 100px;
-    left: 400px;
+    gap: 20px;   
+    padding: 120px 40px 40px;
+    margin: 50px auto;
+    background-image: url("../assets/images/drift-logo.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 220px;
+    
 }
 
 .auth-form__title {

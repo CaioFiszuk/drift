@@ -29,6 +29,7 @@ function App() {
   }) => {
     auth.register(username, email, password)
     .then(()=>{
+      toast.success("Usuário cadastrado com sucesso", { autoClose: 3000 });
       navigate("/signin");
     })
     .catch(console.error)
