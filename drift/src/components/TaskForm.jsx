@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 function TaskForm({handleCreateTask}) {
   const [title, setTitle] = useState("");
-  const [type, setType] = useState("tarefa unica");
   const [repeatMode, setRepeatMode] = useState("diaria");
   const [isMandatory, setIsMandatory] = useState(true);
   const [moodTag, setMoodTag] = useState("good");
@@ -30,7 +29,7 @@ function TaskForm({handleCreateTask}) {
         : null,
     };
 
-    await handleCreateTask({title, type, frequency: repeatData, isMandatory, moodTag});
+    await handleCreateTask({title, frequency: repeatData, isMandatory, moodTag});
     
     toast.success("Tarefa criada com sucesso", { autoClose: 3000 });
   };
@@ -57,16 +56,6 @@ function TaskForm({handleCreateTask}) {
       />
       {!isValid && <Validator message={errorMessage} />}
 
-       <label className="form__label">Tipo de tarefa</label>
-        <select
-          className="form__input"
-          name="type"
-          value={type}
-          onChange={(e)=>setType(e.target.value)}
-        >
-            <option value="tarefa unica">Tarefa única</option>
-            <option value="projeto">Projeto</option> 
-        </select>
 
       <label className="form__label">Repetição</label>
       <select

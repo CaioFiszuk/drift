@@ -95,7 +95,6 @@ function AllTasks({tasks, setTasks}) {
           <thead>
             <tr>
               <th className='task-table__cell'>Título</th>
-              <th className='task-table__cell'>Tipo de tarefa</th>
               <th className='task-table__cell'>Frequência</th>
               <th className='task-table__cell'></th>
               <th className='task-table__cell'></th>
@@ -105,7 +104,6 @@ function AllTasks({tasks, setTasks}) {
             {tasks.map((task) => (
               <tr key={task._id}>
                 <td className='task-table__cell'>{task.title}</td>
-                <td className='task-table__cell'>{task.type}</td>
                 <td className='task-table__cell'>{task.frequency.mode}</td>
                 <td className='task-table__cell'>
                   <FaPencilAlt 

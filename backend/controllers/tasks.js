@@ -2,13 +2,12 @@ const Task = require('../models/task');
 
 module.exports.createTask = async (req,res) => {
   try {
-    const { title, type, frequency, isMandatory, moodTag } = req.body;
+    const { title, frequency, isMandatory, moodTag } = req.body;
     const userId = req.user.id;
 
     const newTask = new Task({
       userId,
       title,
-      type,
       frequency,
       isMandatory,
       moodTag,
@@ -64,13 +63,12 @@ module.exports.deleteTask = async (req,res) => {
 module.exports.updateTask = async (req,res) => {
     try {
     const { taskId } = req.params;
-    const { title, type, frequency, daysOfWeek, moodTag, isMandatory } = req.body;
+    const { title, frequency, daysOfWeek, moodTag, isMandatory } = req.body;
 
     const task = await Task.findByIdAndUpdate(
       taskId,
       {
         title,
-        type,
         repeat: {
           frequency,
           daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : [daysOfWeek]

@@ -13,12 +13,6 @@ const taskSchema = new mongoose.Schema({
     trim: true,
   },
 
-  type: {
-    type: String,
-    enum: ["tarefa unica", "projeto"],
-    default: "tarefa unica",
-  },
-
   frequency: {
     mode: {
       type: String,
