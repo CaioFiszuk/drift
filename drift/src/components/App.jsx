@@ -10,6 +10,7 @@ import Manifest from './Manifest';
 import * as auth from '../utils/auth';
 import * as token from '../utils/token';
 import { api } from '../utils/api';
+import { getTasksForToday } from '../utils/getTasksForTheDay';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,6 +19,8 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
   const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
+  const [tasksByMood, setTasksByMood] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
@@ -65,10 +68,30 @@ function App() {
   const handleGetTasks = async () => {
       try{
         const data = await api.getTasks();
-        setTasks(data);
+        const todayTasks = getTasksForToday(data);
+        setTasks(todayTasks);
       }catch(error){
         console.log(error);
       }
+  }
+
+  const handleGetAllTasks = async () => {
+      try{
+        const data = await api.getTasks();
+        setAllTasks(data);
+      }catch(error){
+        console.log(error);
+      }
+  }
+
+  const handleGetTasksByMood = async () => {
+    try {
+      const data = await api.getTasksByMood();
+      const todayTasks = getTasksForToday(data);
+      setTasksByMood(todayTasks);
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   useEffect(()=>{
@@ -103,7 +126,13 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Header handleSignOut={signOut} setTasks={setTasks}/>
-              <Main getTasks={handleGetTasks} setTasks={setTasks} tasks={tasks}/>
+              <Main 
+                getTasks={handleGetTasks} 
+                setTasks={setTasks} 
+                tasks={tasks} 
+                tasksByMood={tasksByMood}
+                getTasksByMood={handleGetTasksByMood}
+              />
             </ProtectedRoute>
           }
         />
@@ -123,7 +152,7 @@ function App() {
         <Route path='/alltasks' element={
            <ProtectedRoute isLoggedIn={isLoggedIn}>
              <Header handleSignOut={signOut} setTasks={setTasks}/>
-             <AllTasks tasks={tasks} setTasks={setTasks}/>
+             <AllTasks tasks={allTasks} setTasks={setAllTasks} getTasks={handleGetAllTasks}/>
            </ProtectedRoute>
         }/>
 

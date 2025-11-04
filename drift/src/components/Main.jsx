@@ -4,23 +4,16 @@ import { TfiFaceSad } from 'react-icons/tfi';
 import '../styles/main.css';
 import { api } from '../utils/api';
 
-function Main({getTasks, setTasks, tasks}) {
+function Main({getTasks, setTasks, tasks, tasksByMood, getTasksByMood}) {
   const [activeMood, setActiveMood] = useState("good");
-  const [tasksByMood, setTasksByMood] = useState([]);
+  //const [tasksByMood, setTasksByMood] = useState([]);
   const statusColors = {
     feito: 'complete',
     em_progresso: 'warning',
     pendente: 'danger',
   };
 
-  const handleGetTaskByMood = async () => {
-    try {
-      const response = await api.getTasksByMood();
-      setTasksByMood(response);
-    } catch(error) {
-      console.log(error);
-    }
-  }
+
 
   const handleChangeStatus = async (task, status) => {
     try{
@@ -36,9 +29,9 @@ function Main({getTasks, setTasks, tasks}) {
   }
 
   useEffect(()=>{
-     handleGetTaskByMood();
+     getTasksByMood();
      getTasks();
-  }, []);
+  }, [tasks]);
 
   return (
     <main className="main">
@@ -83,7 +76,7 @@ function Main({getTasks, setTasks, tasks}) {
                       <button 
                         className='task-table__button info'
                         onClick={()=>{
-                          handleChangeStatus(task, 'em progresso');
+                          handleChangeStatus(task, 'em_progresso');
                         }}
                       >
                         Começar
@@ -117,12 +110,12 @@ function Main({getTasks, setTasks, tasks}) {
               {tasksByMood.map((taskByMood) => (
                 <tr key={taskByMood._id}>
                   <td className='task-table__cell'>{taskByMood.title}</td>
-                  <td className='task-table__cell'>{taskByMood.status}</td>
+                  <td className={`task-table__cell ${statusColors[taskByMood.status] || ''}`}>{taskByMood.status}</td>
                   <td className="task-table__cell">
                     <button 
                       className='task-table__button info'
                       onClick={()=>{
-                        handleChangeStatus(taskByMood, 'em progresso');
+                        handleChangeStatus(taskByMood, 'em_progresso');
                       }}
                     >
                       Começar

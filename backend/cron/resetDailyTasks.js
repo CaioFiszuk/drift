@@ -6,7 +6,7 @@ cron.schedule("0 0 * * *", async () => {
     const result = await Task.updateMany(
       {
         "frequency.mode": "diaria",
-        status: { $in: ["feito", "em progresso"] }
+        status: { $in: ["feito", "em_progresso"] }
       },
       { $set: { status: "pendente" } }
     );

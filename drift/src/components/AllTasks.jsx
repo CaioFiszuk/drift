@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/task-table.css';
 import { FaTrash } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import Popup from './Popup';
 import { api } from '../utils/api';
 
-function AllTasks({tasks, setTasks}) {
+function AllTasks({tasks, setTasks, getTasks}) {
   const [deleteModal, setDeleteModal] = useState(false);
   //const [updateModal, setUpdateModal] = useState(false);
    /* const [updateFormData, setUpdateFormData] = useState({
@@ -87,6 +87,10 @@ function AllTasks({tasks, setTasks}) {
       event.preventDefault();
       handleUpdateTask(updateFormData);
   };*/
+
+  useEffect(()=>{
+    getTasks();
+  }, []);
 
     return(
         <div>
