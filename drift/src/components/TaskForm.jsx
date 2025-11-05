@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Validator from './Validator';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function TaskForm({handleCreateTask}) {
+function TaskForm({handleSubmitForm, formName, buttonName, initialData}) {
   const [title, setTitle] = useState("");
   const [repeatMode, setRepeatMode] = useState("diaria");
   const [isMandatory, setIsMandatory] = useState(true);
@@ -11,9 +11,22 @@ function TaskForm({handleCreateTask}) {
   const [exceptDays, setExceptDays] = useState([]);
   const [dayOfWeek, setDayOfWeek] = useState(null);
   const [fixedDate, setFixedDate] = useState("");
-
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title || "");
+      setRepeatMode(initialData.frequency?.mode || "diaria");
+      setIsMandatory(initialData.isMandatory ?? true);
+      setMoodTag(initialData.moodTag || "good");
+      setExceptDays(initialData.frequency?.exceptDays || []);
+      setDayOfWeek(initialData.frequency?.dayOfWeek ?? null);
+      setFixedDate(initialData.frequency?.dueDate || "");
+    }
+
+    
+  }, [initialData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,14 +42,14 @@ function TaskForm({handleCreateTask}) {
         : null,
     };
 
-    await handleCreateTask({title, frequency: repeatData, isMandatory, moodTag});
+    await handleSubmitForm({title, frequency: repeatData, isMandatory, moodTag});
     
-    toast.success("Tarefa criada com sucesso", { autoClose: 3000 });
+    toast.success(initialData ? "Tarefa atualizada com sucesso" : "Tarefa criada com sucesso", { autoClose: 3000 });
   };
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-     <legend className='form__title'>Criar Tarefa</legend>
+     <legend className='form__title'>{formName}</legend>
 
       <input 
         type="text" 
@@ -120,7 +133,10 @@ function TaskForm({handleCreateTask}) {
       {["semanal", "quinzenal"].includes(repeatMode) && (
         <div>
           <label className="form__label">Dia da semana:</label>
-          <select className="form__input" onChange={(e) => setDayOfWeek(Number(e.target.value))}>
+          <select 
+            className="form__input"
+            onChange={(e) => setDayOfWeek(Number(e.target.value))}
+          >
             <option value="">Selecione</option>
             {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(
               (day, index) => (
@@ -151,7 +167,7 @@ function TaskForm({handleCreateTask}) {
         </div>
       )}
 
-      <button type="submit" className="form__button">Criar</button>
+      <button type="submit" className="form__button">{buttonName}</button>
 
     </form>
   );

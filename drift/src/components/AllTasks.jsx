@@ -3,18 +3,12 @@ import '../styles/task-table.css';
 import { FaTrash } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import Popup from './Popup';
+import TaskForm from './TaskForm';
 import { api } from '../utils/api';
 
 function AllTasks({tasks, setTasks, getTasks}) {
   const [deleteModal, setDeleteModal] = useState(false);
-  //const [updateModal, setUpdateModal] = useState(false);
-   /* const [updateFormData, setUpdateFormData] = useState({
-    title: '',
-    type: '',
-    frequency: '',
-    moodTag: '',
-    isMandatory: ''
-  });*/
+  const [updateModal, setUpdateModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
 
   const openDeleteModal = (task) => {
@@ -39,34 +33,16 @@ function AllTasks({tasks, setTasks, getTasks}) {
     }
   }
 
-  /*const openUpdateModal = (task) => {
+  const openUpdateModal = (task) => {
     setSelectedTask(task);
-    setUpdateFormData({
-      title: task.title,
-      type: task.type,
-      frequency: task.repeat.frequency,
-      daysOfWeek: task.repeat.daysOfWeek,
-      moodTag: task.moodTag,
-      isMandatory: task.isMandatory
-    });
     setUpdateModal(true);
   }
 
- /* const closeUpdateModal = () => {
+  const closeUpdateModal = () => {
     setUpdateModal(false);
   }
 
-    const handleChange = (event) => {
-    const { name, value, type } = event.target;
-
-    setUpdateFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" ? Number(value) : value,
-    }));
-  };
-
-
-  /*const handleUpdateTask = async (newValue) => {
+  const handleUpdateTask = async (newValue) => {
     if(!selectedTask) return;
 
     try{
@@ -81,12 +57,7 @@ function AllTasks({tasks, setTasks, getTasks}) {
     } catch (error) {
       console.error("Erro ao atualizar: ", error);
     }
-  }*/
-
-  /*const handleSubmit = (event) => {
-      event.preventDefault();
-      handleUpdateTask(updateFormData);
-  };*/
+  }
 
   useEffect(()=>{
     getTasks();
@@ -112,7 +83,7 @@ function AllTasks({tasks, setTasks, getTasks}) {
                 <td className='task-table__cell'>
                   <FaPencilAlt 
                    className='task-table__cell__icon'
-                   //onClick={() => openUpdateModal(task)}
+                   onClick={() => openUpdateModal(task)}
                   />
                 </td>
                 <td className='task-table__cell'>
@@ -135,94 +106,18 @@ function AllTasks({tasks, setTasks, getTasks}) {
             <button className='form__button' onClick={handleDeleteTask}>Sim</button>
             <button className='form__button' onClick={closeDeleteModal}>Não</button>
           </div>
-      </Popup>  
+      </Popup> 
+
+      <Popup isOpen={updateModal} onClose={closeUpdateModal}>
+          <TaskForm 
+            handleSubmitForm={handleUpdateTask} 
+            formName={"Editar Tarefa"} 
+            buttonName={"Editar"}
+            initialData={selectedTask}
+          />
+      </Popup> 
     </div>
     );
 }
 
 export default AllTasks;
-
-
-/**
- *        
- * 
- * 
- * 
- *    <Popup isOpen={updateModal} onClose={closeUpdateModal}>
-           <form onSubmit={handleSubmit} className='form'>
-             <legend className='form__title'>Editar Tarefa</legend>
-
-             <input 
-              type="text" 
-              placeholder='Título'
-              className='form__input'
-              name='title'
-              value={updateFormData.title}
-              onChange={handleChange}
-              required
-              minLength={5}
-              maxLength={20}
-              pattern="^[^\d]*$"
-             />
-
-             <select
-               className='form__input'
-               name='type'
-               value={updateFormData.type}
-               onChange={handleChange}
-             >
-               <option value="tarefa unica">Tarefa única</option>
-               <option value="projeto">Projeto</option> 
-             </select>
-
-            <select
-               className='form__input'
-               name='frequency'
-               value={updateFormData.frequency}
-               onChange={handleChange}
-             >
-               
-             </select>
-
-             <input 
-              type="number"
-              placeholder='Dias da semana'
-              className='form__input'
-              name='daysOfWeek'
-              value={updateFormData.daysOfWeek}
-              onChange={handleChange}
-              required
-              min={1}
-              max={7}
-             /> 
-
-              <label className='form__label'>Tarefa obrigatória?</label>
-             <select
-               className='form__input'
-               name='isMandatory'
-               value={updateFormData.isMandatory}
-               onChange={handleChange}
-             >
-              <option value={true}>Sim</option>
-              <option value={false}>Não</option>
-             </select>
-
-             <select
-              className='form__input'
-              name='moodTag'
-              value={updateFormData.moodTag}
-              onChange={handleChange}
-             >
-              <option value="good">Motivado</option>
-              <option value="bad">Desmotivado</option>
-             </select>
-
-            <button 
-              type="submit" 
-              className='form__button'
-            >
-              Editar
-            </button>
-           </form>
-      </Popup>
- */

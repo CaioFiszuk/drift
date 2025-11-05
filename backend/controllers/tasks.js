@@ -63,16 +63,13 @@ module.exports.deleteTask = async (req,res) => {
 module.exports.updateTask = async (req,res) => {
     try {
     const { taskId } = req.params;
-    const { title, frequency, daysOfWeek, moodTag, isMandatory } = req.body;
+    const { title, frequency, moodTag, isMandatory } = req.body;
 
     const task = await Task.findByIdAndUpdate(
       taskId,
       {
         title,
-        repeat: {
-          frequency,
-          daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : [daysOfWeek]
-        },
+        frequency,
         moodTag,
         isMandatory
       },

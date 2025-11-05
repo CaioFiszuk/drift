@@ -44,7 +44,7 @@ function Header({handleSignOut, setTasks}) {
 
 
         <Popup isOpen={createTaskModalOpen} onClose={closeCreateTaskModal}>
-           <TaskForm handleCreateTask={handleCreateTask}/>
+           <TaskForm handleSubmitForm={handleCreateTask} formName={"Criar Tarefa"} buttonName={"Criar"}/>
         </Popup>
     </header>
   )
