@@ -25,18 +25,28 @@ function App() {
 
   const navigate = useNavigate();
 
-  const handleRegistration = ({
-    username,
-    email,
-    password
-  }) => {
-    auth.register(username, email, password)
-    .then(()=>{
-      toast.success("Usuário cadastrado com sucesso", { autoClose: 3000 });
-      navigate("/signin");
-    })
-    .catch(console.error)
+const handleRegistration = async ({ username, email, password }) => {
+    const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+
+     if (!nameRegex.test(username.trim())) {
+       toast.error("O nome deve conter apenas letras.", { autoClose: 3000 });
+       return;
+      }
+
+  try {
+    await auth.register(username, email, password);
+    
+    toast.success("Usuário cadastrado com sucesso", { autoClose: 3000 });
+    navigate("/signin");
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      toast.error("Erro ao registrar o usuário", { autoClose: 3000 });
+    } else {
+      toast.error(error.message.slice(6, error.message.length), { autoClose: 3000 });
+    }
+    console.error(error);
   }
+};
 
   const handleLogin = ({ email, password }) => {
     auth

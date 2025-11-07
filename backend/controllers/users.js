@@ -18,9 +18,24 @@ module.exports.getUser = (req, res, next) => {
   .catch(next);
 };
 
+module.exports.getUsers = async (req, res, next) => {
+  try{
+    const users = await User.find({});
+    res.send(users);
+  } catch(error) {
+    console.log(error);
+  }
+}
+
 module.exports.createUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
+    const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+
+    if (!nameRegex.test(username.trim())) {
+      return res.status(400).json({ message: "O nome deve conter apenas letras." });
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
