@@ -4,3 +4,9 @@
     align-self: center;
     margin-bottom: 10px;
 }
+
+@media (max-width: 642px) {
+  .form__error-message {
+    font-size: 15px;
+  }
+}

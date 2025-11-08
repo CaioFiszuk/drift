@@ -101,11 +101,13 @@ function AllTasks({tasks, setTasks, getTasks}) {
       )}
 
       <Popup isOpen={deleteModal} onClose={closeDeleteModal}>
-        <h3 className='form__title'>Tem certeza?</h3>
-          <div className='form__button-box'>
-            <button className='form__button' onClick={handleDeleteTask}>Sim</button>
-            <button className='form__button' onClick={closeDeleteModal}>Não</button>
-          </div>
+        <div className='form'>
+          <h3 className='form__title'>Tem certeza?</h3>
+            <div className='form__button-box'>
+              <button className='form__button' onClick={handleDeleteTask}>Sim</button>
+              <button className='form__button' onClick={closeDeleteModal}>Não</button>
+            </div>
+        </div>
       </Popup> 
 
       <Popup isOpen={updateModal} onClose={closeUpdateModal}>

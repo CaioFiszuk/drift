@@ -38,9 +38,10 @@ function Header({handleSignOut, setTasks}) {
           <NavLink to='/manifest' className='header__navigation-link'>Manifesto Drift</NavLink>
         </nav>
 
-        <button className='header__button' onClick={openCreateTaskModal}>Criar tarefa</button>
-
-        <button className='header__button' onClick={handleSignOut}>Sign Out</button>
+        <div className='header__buttons'>
+          <button className='header__button' onClick={openCreateTaskModal}>Criar tarefa</button>
+          <button className='header__button' onClick={handleSignOut}>Sair</button>
+        </div>
 
 
         <Popup isOpen={createTaskModalOpen} onClose={closeCreateTaskModal}>

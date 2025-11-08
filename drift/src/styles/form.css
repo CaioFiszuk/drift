@@ -1,7 +1,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 500px;
+    max-width: 500px;
     padding: 15px 0;
 }
 
@@ -44,8 +44,6 @@
     border: none;
     background-color: royalblue;
     color: white;
-    font-size: 18px;
-    line-height: 22px;
     width: 20%;
     padding: 10px;
     align-self: center;
@@ -55,4 +53,10 @@
 
 .form__button:hover {
     opacity: 0.85;
+}
+
+@media (max-width: 642px) {
+  .form {
+    max-width: 300px;
+  }
 }
