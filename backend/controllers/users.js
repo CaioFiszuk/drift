@@ -29,7 +29,7 @@ module.exports.getUsers = async (req, res, next) => {
 
 module.exports.createUser = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
     const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
 
