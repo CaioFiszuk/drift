@@ -38,8 +38,19 @@ module.exports.getAllTasks = async (req,res) => {
 module.exports.getTasksByMood = async (req, res) => {
   try {
     const userId = req.user.id;
-    const tasks = await Task.find({userId: userId, moodTag: 'bad', isMandatory: false});
+    const tasks = await Task.find({userId, moodTag: 'bad', isMandatory: false});
 
+    return res.status(200).send(tasks);
+
+  }catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
+}
+
+module.exports.getFixedTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const tasks = await Task.find({ userId, "frequency.mode": { $in: ["data fixa", "data fixa adiavel"] }});
     return res.status(200).send(tasks);
 
   }catch(error) {

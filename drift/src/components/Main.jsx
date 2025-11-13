@@ -3,17 +3,15 @@ import { FaRegSmile } from 'react-icons/fa';
 import { TfiFaceSad } from 'react-icons/tfi';
 import '../styles/main.css';
 import { api } from '../utils/api';
+import Swal from 'sweetalert2';
 
 function Main({getTasks, setTasks, tasks, tasksByMood, getTasksByMood}) {
   const [activeMood, setActiveMood] = useState("good");
-  //const [tasksByMood, setTasksByMood] = useState([]);
   const statusColors = {
     feito: 'complete',
     em_progresso: 'warning',
     pendente: 'danger',
   };
-
-
 
   const handleChangeStatus = async (task, status) => {
     try{
@@ -27,6 +25,38 @@ function Main({getTasks, setTasks, tasks, tasksByMood, getTasksByMood}) {
       console.error("Erro ao atualizar: ", error);
     }
   }
+
+  const getFixedTasks = async () => {
+    try {
+       const fixedTasks = await api.getFixedTasks();
+       return fixedTasks;
+    } catch(error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const fixedTasks = await getFixedTasks();
+      if (!fixedTasks.length) return;
+
+      const randomTask = fixedTasks[Math.floor(Math.random() * fixedTasks.length)];
+      const dueDate = new Date(randomTask.frequency.dueDate);
+      const today = new Date();
+      const remainingDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+
+      if (remainingDays < 0) return;
+
+      Swal.fire({
+        title: 'Lembrete!',
+        text: `${randomTask.title} daqui há ${remainingDays} dias`,
+        confirmButtonText: 'OK',
+      });
+    }, 3600000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(()=>{
      getTasksByMood();
