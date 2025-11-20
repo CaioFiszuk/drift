@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 function App() {
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
   const [tasks, setTasks] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
