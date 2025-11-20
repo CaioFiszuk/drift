@@ -77,17 +77,16 @@ Um sistema automático busca de hora em hora as tarefas fixas do usuário e exib
 
 Endpoints principais:
 
-`
-  POST /signup
-  POST /signin
-  GET  /tasks
-  POST /tasks
-  PATCH  /tasks/:taskId
-  DELETE /tasks/:taskId
-  GET /tasks/fixed
-  GET /tasks/mood
-  PATCH /tasks/:taskId/status
-`
+- POST /signup
+- POST /signin
+- GET  /tasks
+- POST /tasks
+- PATCH  /tasks/:taskId
+- DELETE /tasks/:taskId
+- GET /tasks/fixed
+- GET /tasks/mood
+- PATCH /tasks/:taskId/status
+
 
 ### Lógica de Exibição de Tarefas
 
@@ -125,6 +124,7 @@ export function getTasksForToday(tasks) {
     }
   });
 }
+```
 
 ### Telas Principais
 
