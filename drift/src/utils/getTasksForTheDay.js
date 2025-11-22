@@ -23,8 +23,8 @@ export function getTasksForToday(tasks) {
       case "data fixa":
         return dayjs(task.frequency?.dueDate).isSame(today, 'day');
 
-      case "data fixa adiavel":
-        return dayjs(task.frequency?.dueDate).isSame(today, 'day');
+      case "ideia":
+        return false;
 
       default:
         return false;

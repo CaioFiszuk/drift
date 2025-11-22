@@ -1,8 +1,6 @@
-import '../styles/manifest.css';
-
 function Manifest() {
     return(
-    <div className="manifest__container">
+    <section className="manifest__container">
           <h1 className="manifest__title">Manifesto Drift</h1>
           <h2 className="manifest__paragraph--center">Porque produtividade não precisa ser uma prisão.</h2>
 
@@ -59,7 +57,7 @@ function Manifest() {
            Porque a produtividade verdadeira não é rigidez.
           É fluidez com propósito.
         </p>
-    </div>
+    </section>
     );
 }
 

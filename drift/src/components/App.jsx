@@ -7,6 +7,7 @@ import Login from './Login';
 import Register from './Register';
 import AllTasks from './AllTasks';
 import Manifest from './Manifest';
+import Ideas from './Ideas';
 import * as auth from '../utils/auth';
 import * as token from '../utils/token';
 import { api } from '../utils/api';
@@ -17,9 +18,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 function App() {
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
   const [tasks, setTasks] = useState([]);
+  const [ideas, setIdeas] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
   const [tasksByMood, setTasksByMood] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -95,6 +96,15 @@ const handleRegistration = async ({ username, email, password }) => {
       }
   }
 
+  const getIdeas = async () => {
+      try{
+        const data = await api.getIdeas();
+        setIdeas(data);
+      }catch(error){
+        console.log(error);
+      }
+  }
+
   const handleGetTasksByMood = async () => {
     try {
       const data = await api.getTasksByMood();
@@ -129,7 +139,7 @@ const handleRegistration = async ({ username, email, password }) => {
   }, [isLoggedIn]);
 
   return (
-    <div>
+    <section>
       <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route 
@@ -174,6 +184,13 @@ const handleRegistration = async ({ username, email, password }) => {
           </ProtectedRoute>
         }/>
 
+        <Route path='/ideas' element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Header handleSignOut={signOut} setTasks={setTasks}/>
+            <Ideas ideas={ideas} getIdeas={getIdeas}/>
+          </ProtectedRoute>
+        }/>
+
           <Route
             path="*"
             element={
@@ -188,7 +205,7 @@ const handleRegistration = async ({ username, email, password }) => {
       </CurrentUserContext.Provider>
 
       <ToastContainer />
-    </div>
+    </section>
   )
 }
 

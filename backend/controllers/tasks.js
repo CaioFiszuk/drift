@@ -50,7 +50,18 @@ module.exports.getTasksByMood = async (req, res) => {
 module.exports.getFixedTasks = async (req, res) => {
   try {
     const userId = req.user.id;
-    const tasks = await Task.find({ userId, "frequency.mode": { $in: ["data fixa", "data fixa adiavel"] }});
+    const tasks = await Task.find({ userId, "frequency.mode": { $in: ["data fixa"] }});
+    return res.status(200).send(tasks);
+
+  }catch(error) {
+    return res.status(500).send({ message: "Server Error" });
+  }
+}
+
+module.exports.getIdeas = async (req, res) => {
+    try {
+    const userId = req.user.id;
+    const tasks = await Task.find({ userId, "frequency.mode": { $in: ["ideia"] }});
     return res.status(200).send(tasks);
 
   }catch(error) {

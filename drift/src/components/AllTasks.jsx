@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import '../styles/task-table.css';
 import { FaTrash } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import Popup from './Popup';
@@ -64,7 +63,7 @@ function AllTasks({tasks, setTasks, getTasks}) {
   }, []);
 
     return(
-        <div>
+        <section>
         {tasks && tasks.length > 0 ? (
         <table className='task-table'>
           <thead>
@@ -101,13 +100,13 @@ function AllTasks({tasks, setTasks, getTasks}) {
       )}
 
       <Popup isOpen={deleteModal} onClose={closeDeleteModal}>
-        <div className='form'>
+        <section className='form'>
           <h3 className='form__title'>Tem certeza?</h3>
             <div className='form__button-box'>
               <button className='form__button' onClick={handleDeleteTask}>Sim</button>
               <button className='form__button' onClick={closeDeleteModal}>Não</button>
             </div>
-        </div>
+        </section>
       </Popup> 
 
       <Popup isOpen={updateModal} onClose={closeUpdateModal}>
@@ -118,7 +117,7 @@ function AllTasks({tasks, setTasks, getTasks}) {
             initialData={selectedTask}
           />
       </Popup> 
-    </div>
+    </section>
     );
 }
 

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Logo from '../assets/images/drift-logo.png';
-import '../styles/form.css';
 import { api } from '../utils/api';
 import Popup from './Popup';
 import TaskForm from './TaskForm';
@@ -34,14 +33,15 @@ function Header({handleSignOut, setTasks}) {
        <NavLink to='/'><img src={Logo} alt="Logo"  className='header__image'/></NavLink>
 
         <nav className='header__navigation'>
+          <NavLink to='/ideas' className='header__navigation-link'>Idéias</NavLink>
           <NavLink to='/alltasks' className='header__navigation-link'>Todas tarefas</NavLink>
           <NavLink to='/manifest' className='header__navigation-link'>Manifesto Drift</NavLink>
         </nav>
 
-        <div className='header__buttons'>
+        <section className='header__buttons'>
           <button className='header__button' onClick={openCreateTaskModal}>Criar tarefa</button>
           <button className='header__button' onClick={handleSignOut}>Sair</button>
-        </div>
+        </section>
 
 
         <Popup isOpen={createTaskModalOpen} onClose={closeCreateTaskModal}>

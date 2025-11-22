@@ -16,7 +16,7 @@ const taskSchema = new mongoose.Schema({
   frequency: {
     mode: {
       type: String,
-      enum: ["diaria", "diaria com exceção", "semanal", "quinzenal", "data fixa", "data fixa adiavel"],
+      enum: ["diaria", "diaria com exceção", "semanal", "quinzenal", "data fixa", "ideia"],
       default: "diaria",
     },
 

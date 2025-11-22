@@ -37,7 +37,7 @@ function TaskForm({handleSubmitForm, formName, buttonName, initialData}) {
       dayOfWeek: ["semanal", "quinzenal"].includes(repeatMode)
         ? dayOfWeek
         : null,
-      dueDate: ["data fixa", "data fixa adiavel"].includes(repeatMode)
+      dueDate: ["data fixa"].includes(repeatMode)
         ? fixedDate
         : null,
     };
@@ -81,7 +81,7 @@ function TaskForm({handleSubmitForm, formName, buttonName, initialData}) {
         <option value="semanal">Semanal</option>
         <option value="quinzenal">Quinzenal</option>
         <option value="data fixa">Fixa</option>
-        <option value="data fixa adiavel">Fixa Adiável</option>
+        <option value="ideia">Ideia</option>
       </select>
 
         <label className="form__label">Tarefa obrigatória?</label>
@@ -149,7 +149,7 @@ function TaskForm({handleSubmitForm, formName, buttonName, initialData}) {
         </div>
       )}
 
-      {["data fixa", "data fixa adiavel"].includes(repeatMode) && (
+      {["data fixa"].includes(repeatMode) && (
         <div>
           <label className="form__label">Data:</label>
           <input
